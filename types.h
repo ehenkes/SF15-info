@@ -42,6 +42,11 @@
 #include <cstdlib>
 #include <algorithm>
 
+//// Additional Code by Dr. Erhard Henkes ("PrettyHardy") 
+#define _MyCode_ // Outputs via cerr to an additional console
+#define _DoNotUseClassical_ // NNUE evaluation always preferred 
+////
+
 #if defined(_MSC_VER)
 // Disable some silly and noisy warning from MSVC compiler
 #pragma warning(disable: 4127) // Conditional expression is constant

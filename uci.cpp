@@ -76,10 +76,10 @@ namespace {
         states->emplace_back();
         pos.do_move(m, states->back());
     }
-    //MyCode
+#if defined _MyCode_
     sync_cerr << token << "\n" << Eval::trace(pos) << "\n" << sync_endl; // own output
     cerr.precision(3);
-    //MyCode
+#endif
 
   }
 

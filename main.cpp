@@ -28,29 +28,30 @@
 #include "tt.h"
 #include "uci.h"
 
-//MyCode
-#include "windows.h"
-#include <iostream>   // for output
-#include "evaluate.h" // for Eval::trace...(const Position& pos)
-//MyCode
+#if defined _MyCode_
+    #include "windows.h"
+    #include "evaluate.h" // for Eval::trace...(const Position& pos)
+#endif
 
 using namespace Stockfish;
 
-static void SetWindow(short Width, short Height, short ScrollBuffer); //MyCode
+#if defined _MyCode_
+    static void SetWindow(short Width, short Height, short ScrollBuffer); 
+#endif
 
 int main(int argc, char* argv[]) {
 
   std::cout << engine_info() << std::endl;
 
-  //MyCode
-  ::AllocConsole();
-  freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
-  ::SetConsoleTextAttribute(::GetStdHandle(STD_ERROR_HANDLE), 14); //yellow text
-  setvbuf(stdout, NULL, _IONBF, 0); //turn off buffering for stdout
-  setvbuf(stderr, NULL, _IONBF, 0); //turn off buffering for stdcerr
-  SetWindow(120, 60, 1000);
-  sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
-  //MyCode
+#if defined _MyCode_
+    ::AllocConsole();
+    freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
+    ::SetConsoleTextAttribute(::GetStdHandle(STD_ERROR_HANDLE), 14); //yellow text
+    setvbuf(stdout, NULL, _IONBF, 0); //turn off buffering for stdout
+    setvbuf(stderr, NULL, _IONBF, 0); //turn off buffering for stdcerr
+    SetWindow(120, 60, 1000);
+    sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1 useClassical = false.\n" << sync_endl;
+#endif
 
   CommandLine::init(argc, argv);
   UCI::init(Options);
@@ -70,19 +71,19 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-//MyCode
-static void SetWindow(short Width, short Height, short ScrollBuffer)
-{
-    COORD coord;
-    coord.X = Width;
-    coord.Y = max(Height, ScrollBuffer);
-    SMALL_RECT Rect;
-    Rect.Top = 0;
-    Rect.Left = 0;
-    Rect.Bottom = Height - 1;
-    Rect.Right = Width - 1;
-    HANDLE Handle = GetStdHandle(STD_ERROR_HANDLE);
-    ::SetConsoleScreenBufferSize(Handle, coord);
-    ::SetConsoleWindowInfo(Handle, true, &Rect);
-}
-//MyCode
+#if defined _MyCode_
+    static void SetWindow(short Width, short Height, short ScrollBuffer)
+    {
+        COORD coord;
+        coord.X = Width;
+        coord.Y = max(Height, ScrollBuffer);
+        SMALL_RECT Rect;
+        Rect.Top = 0;
+        Rect.Left = 0;
+        Rect.Bottom = Height - 1;
+        Rect.Right = Width - 1;
+        HANDLE Handle = GetStdHandle(STD_ERROR_HANDLE);
+        ::SetConsoleScreenBufferSize(Handle, coord);
+        ::SetConsoleWindowInfo(Handle, true, &Rect);
+    }
+#endif
