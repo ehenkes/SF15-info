@@ -39,18 +39,34 @@ using namespace Stockfish;
     static void SetWindow(short Width, short Height, short ScrollBuffer); 
 #endif
 
-int main(int argc, char* argv[]) {
-
-  std::cout << engine_info() << std::endl;
+int main(int argc, char* argv[]) 
+{
+    std::cout << engine_info() << std::endl;
 
 #if defined _MyCode_
-    ::AllocConsole();
-    freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
-    ::SetConsoleTextAttribute(::GetStdHandle(STD_ERROR_HANDLE), 14); //yellow text
-    setvbuf(stdout, NULL, _IONBF, 0); //turn off buffering for stdout
-    setvbuf(stderr, NULL, _IONBF, 0); //turn off buffering for stdcerr
-    SetWindow(120, 60, 1000);
-    sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1 useClassical = false.\n" << sync_endl;
+  /*for (int i = 1; i < argc; i++) 
+  {
+
+      if (!strcmp(argv[i], "-ShowHelpForPrettyHardy")) 
+      {
+          sync_cerr << "Usage: if Parameter -usePrettyHardy exists\nthen Console prompt up\n" << sync_endl;
+      }
+      else if (!strcmp(argv[i], "-usePrettyHardy")) 
+      {
+      */
+          ::AllocConsole();
+          freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
+          ::SetConsoleTextAttribute(::GetStdHandle(STD_ERROR_HANDLE), 14); //yellow text
+          setvbuf(stdout, NULL, _IONBF, 0); //turn off buffering for stdout
+          setvbuf(stderr, NULL, _IONBF, 0); //turn off buffering for stdcerr
+          SetWindow(120, 60, 1000);
+          sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
+     /* }
+      else 
+      {
+          if (i == argc - 1) break;
+      }
+  }*/
 #endif
 
   CommandLine::init(argc, argv);
