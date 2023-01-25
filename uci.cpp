@@ -19,8 +19,11 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <string>
+#include <fstream>
+
 
 #include "evaluate.h"
 #include "movegen.h"
@@ -32,7 +35,13 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
+#include "material.h"
+#define NOMINMAX
+#include "windows.h"
+
 using namespace std;
+
+ofstream myfile; //Ausgabe-File für Werte
 
 namespace Stockfish {
 
@@ -76,9 +85,37 @@ namespace {
         states->emplace_back();
         pos.do_move(m, states->back());
     }
+
 #if defined _MyCode_
-    sync_cerr << token << "\n" << Eval::trace(pos) << "\n" << sync_endl; // own output
     cerr.precision(3);
+    sync_cerr << token << "\n" << Eval::trace(pos) << "\n" << sync_endl; // own output
+    int phaseOfTheGame = (Material::probe(pos))->game_phase();
+    
+    //Material
+    double mg_material = Trace::to_cp(mg_value(Trace::scores[Trace::MATERIAL][WHITE])) - Trace::to_cp(mg_value(Trace::scores[Trace::MATERIAL][BLACK]));
+    double eg_material = Trace::to_cp(eg_value(Trace::scores[Trace::MATERIAL][WHITE])) - Trace::to_cp(eg_value(Trace::scores[Trace::MATERIAL][BLACK]));
+
+    myfile.open("output.txt", std::ios_base::app); // append instead of overwrite
+    myfile << "Spielzug:                        " << token << "\n";
+    myfile.precision(3);
+    myfile << "Wert  1: Spielphase (128 ...0):  " << phaseOfTheGame << "\n";
+    myfile << "Wert  2: King Safety White (mg): " << Trace::to_cp(mg_value(Trace::scores[KING][WHITE])) << "\n";
+    myfile << "Wert  2: King Safety White (eg): " << Trace::to_cp(eg_value(Trace::scores[KING][WHITE])) << "\n";
+    myfile << "Wert  3: King Safety Black (mg): " << Trace::to_cp(mg_value(Trace::scores[KING][BLACK])) << "\n";
+    myfile << "Wert  3: King Safety Black (eg): " << Trace::to_cp(eg_value(Trace::scores[KING][BLACK])) << "\n";
+    myfile << "Wert  4: Mobility White (mg)   : " << Trace::to_cp(mg_value(Trace::scores[Trace::MOBILITY][WHITE])) << "\n";
+    myfile << "Wert  4: Mobility White (eg)   : " << Trace::to_cp(eg_value(Trace::scores[Trace::MOBILITY][WHITE])) << "\n";
+    myfile << "Wert  5: Mobility Black (mg)   : " << Trace::to_cp(mg_value(Trace::scores[Trace::MOBILITY][BLACK])) << "\n";
+    myfile << "Wert  5: Mobility Black (eg)   : " << Trace::to_cp(eg_value(Trace::scores[Trace::MOBILITY][BLACK])) << "\n";
+    myfile << "Wert  6: Space White (mg)      : " << Trace::to_cp(mg_value(Trace::scores[Trace::SPACE][WHITE])) << "\n";
+    myfile << "Wert  6: Space White (eg)      : " << Trace::to_cp(eg_value(Trace::scores[Trace::SPACE][WHITE])) << "\n";
+    myfile << "Wert  7: Space Black (mg)      : " << Trace::to_cp(mg_value(Trace::scores[Trace::SPACE][BLACK])) << "\n";
+    myfile << "Wert  7: Space Black (eg)      : " << Trace::to_cp(eg_value(Trace::scores[Trace::SPACE][BLACK])) << "\n";
+    myfile << "Wert  8: Threats White (mg)    : " << Trace::to_cp(mg_value(Trace::scores[Trace::THREAT][WHITE])) << "\n";
+    myfile << "Wert  8: Threats White (eg)    : " << Trace::to_cp(eg_value(Trace::scores[Trace::THREAT][WHITE])) << "\n";
+    myfile << "Wert  9: Threats Black (mg)    : " << Trace::to_cp(mg_value(Trace::scores[Trace::THREAT][BLACK])) << "\n";
+    myfile << "Wert  9: Threats Black (eg)    : " << Trace::to_cp(eg_value(Trace::scores[Trace::THREAT][BLACK])) << "\n\n";
+    myfile.close();        
 #endif
 
   }

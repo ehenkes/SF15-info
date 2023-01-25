@@ -43,7 +43,7 @@
 #include <algorithm>
 
 //// Additional Code by Dr. Erhard Henkes ("PrettyHardy") 
-#define _MyCode_ // Outputs via cerr to an additional console
+#define _MyCode_ // Optional Outputs via cerr to an additional console
 #define _DoNotUseClassical_ // NNUE evaluation always preferred 
 ////
 

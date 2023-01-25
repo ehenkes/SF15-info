@@ -55,11 +55,14 @@ int main(int argc, char* argv[])
       {
       */
           ::AllocConsole();
+          
           freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
           ::SetConsoleTextAttribute(::GetStdHandle(STD_ERROR_HANDLE), 14); //yellow text
           setvbuf(stdout, NULL, _IONBF, 0); //turn off buffering for stdout
           setvbuf(stderr, NULL, _IONBF, 0); //turn off buffering for stdcerr
-          SetWindow(120, 60, 1000);
+          ::SetWindow(120, 60, 1000);
+          ::ShowWindow(::GetConsoleWindow(), SW_SHOW);
+          ::UpdateWindow(::GetConsoleWindow());
           sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
      /* }
       else 

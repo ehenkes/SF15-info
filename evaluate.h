@@ -57,6 +57,18 @@ namespace Eval {
 
 } // namespace Eval
 
+namespace Trace {
+
+    enum Tracing { NO_TRACE, TRACE };
+
+    enum Term { // The first 8 entries are reserved for PieceType
+        MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, WINNABLE, TOTAL, TERM_NB
+    };
+
+    extern Score scores[TERM_NB][COLOR_NB];
+    double to_cp(Value v);
+} // namespace Trace
+
 } // namespace Stockfish
 
 #endif // #ifndef EVALUATE_H_INCLUDED
