@@ -99,22 +99,24 @@ namespace {
     myfile << "Spielzug:                        " << token << "\n";
     myfile.precision(3);
     myfile << "Wert  1: Spielphase (128 ...0):  " << phaseOfTheGame << "\n";
-    myfile << "Wert  2: King Safety White (mg): " << Trace::to_cp(mg_value(Trace::scores[KING][WHITE])) << "\n";
-    myfile << "Wert  2: King Safety White (eg): " << Trace::to_cp(eg_value(Trace::scores[KING][WHITE])) << "\n";
-    myfile << "Wert  3: King Safety Black (mg): " << Trace::to_cp(mg_value(Trace::scores[KING][BLACK])) << "\n";
-    myfile << "Wert  3: King Safety Black (eg): " << Trace::to_cp(eg_value(Trace::scores[KING][BLACK])) << "\n";
-    myfile << "Wert  4: Mobility White (mg)   : " << Trace::to_cp(mg_value(Trace::scores[Trace::MOBILITY][WHITE])) << "\n";
-    myfile << "Wert  4: Mobility White (eg)   : " << Trace::to_cp(eg_value(Trace::scores[Trace::MOBILITY][WHITE])) << "\n";
-    myfile << "Wert  5: Mobility Black (mg)   : " << Trace::to_cp(mg_value(Trace::scores[Trace::MOBILITY][BLACK])) << "\n";
-    myfile << "Wert  5: Mobility Black (eg)   : " << Trace::to_cp(eg_value(Trace::scores[Trace::MOBILITY][BLACK])) << "\n";
-    myfile << "Wert  6: Space White (mg)      : " << Trace::to_cp(mg_value(Trace::scores[Trace::SPACE][WHITE])) << "\n";
-    myfile << "Wert  6: Space White (eg)      : " << Trace::to_cp(eg_value(Trace::scores[Trace::SPACE][WHITE])) << "\n";
-    myfile << "Wert  7: Space Black (mg)      : " << Trace::to_cp(mg_value(Trace::scores[Trace::SPACE][BLACK])) << "\n";
-    myfile << "Wert  7: Space Black (eg)      : " << Trace::to_cp(eg_value(Trace::scores[Trace::SPACE][BLACK])) << "\n";
-    myfile << "Wert  8: Threats White (mg)    : " << Trace::to_cp(mg_value(Trace::scores[Trace::THREAT][WHITE])) << "\n";
-    myfile << "Wert  8: Threats White (eg)    : " << Trace::to_cp(eg_value(Trace::scores[Trace::THREAT][WHITE])) << "\n";
-    myfile << "Wert  9: Threats Black (mg)    : " << Trace::to_cp(mg_value(Trace::scores[Trace::THREAT][BLACK])) << "\n";
-    myfile << "Wert  9: Threats Black (eg)    : " << Trace::to_cp(eg_value(Trace::scores[Trace::THREAT][BLACK])) << "\n\n";
+
+    int KingSafetyWhite = (phaseOfTheGame * mg_value(Trace::scores[KING][WHITE])            + (128 - phaseOfTheGame) * eg_value(Trace::scores[KING][WHITE]))            / 128;
+    int KingSafetyBlack = (phaseOfTheGame * mg_value(Trace::scores[KING][BLACK])            + (128 - phaseOfTheGame) * eg_value(Trace::scores[KING][BLACK]))            / 128;
+    int MobilityWhite   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][WHITE]) + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][WHITE])) / 128;
+    int MobilityBlack   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][BLACK]) + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][BLACK])) / 128;
+    int SpaceWhite      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][WHITE])    + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][WHITE]))    / 128;
+    int SpaceBlack      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][BLACK])    + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][BLACK]))    / 128;
+    int ThreatsWhite    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][WHITE])   + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][WHITE]))   / 128;
+    int ThreatsBlack    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][BLACK])   + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][BLACK]))   / 128;
+
+    myfile << "Wert  2: King Safety White: " << Trace::to_cp((Value)KingSafetyWhite) << "\n";
+    myfile << "Wert  3: King Safety Black: " << Trace::to_cp((Value)KingSafetyBlack) << "\n";
+    myfile << "Wert  4: Mobility White:    " << Trace::to_cp((Value)MobilityWhite)   << "\n";
+    myfile << "Wert  5: Mobility Black:    " << Trace::to_cp((Value)MobilityBlack)   << "\n";
+    myfile << "Wert  6: Space White:       " << Trace::to_cp((Value)SpaceWhite)      << "\n";
+    myfile << "Wert  7: Space Black:       " << Trace::to_cp((Value)SpaceBlack)      << "\n";
+    myfile << "Wert  8: Threats White:     " << Trace::to_cp((Value)ThreatsWhite) << "\n";
+    myfile << "Wert  9: Threats Black:     " << Trace::to_cp((Value)ThreatsBlack) << "\n\n";
     myfile.close();        
 #endif
 
