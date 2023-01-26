@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
           ::SetWindow(120, 60, 1000);
           ::ShowWindow(::GetConsoleWindow(), SW_SHOW);
           ::UpdateWindow(::GetConsoleWindow());
-          sync_cerr << "PrettyHardy: Hallo! Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
+          sync_cerr << "26.01.2023: Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
      /* }
       else 
       {

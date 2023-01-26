@@ -24,10 +24,15 @@
 #include <string>
 #include <fstream>
 
+#include "bitboard.h"
+#include "material.h"
+#include "misc.h"
+#include "pawns.h"
 
-#include "evaluate.h"
-#include "movegen.h"
 #include "position.h"
+#include "evaluate.h"
+#include "nnue/nnue_common.h"
+#include "movegen.h"
 #include "search.h"
 #include "thread.h"
 #include "timeman.h"
@@ -98,25 +103,40 @@ namespace {
     myfile.open("output.txt", std::ios_base::app); // append instead of overwrite
     myfile << "Spielzug:                        " << token << "\n";
     myfile.precision(3);
-    myfile << "Wert  1: Spielphase (128 ...0):  " << phaseOfTheGame << "\n";
+    myfile << "Phase of the Game (128 ...0):  " << phaseOfTheGame << "\n";
 
-    int KingSafetyWhite = (phaseOfTheGame * mg_value(Trace::scores[KING][WHITE])            + (128 - phaseOfTheGame) * eg_value(Trace::scores[KING][WHITE]))            / 128;
-    int KingSafetyBlack = (phaseOfTheGame * mg_value(Trace::scores[KING][BLACK])            + (128 - phaseOfTheGame) * eg_value(Trace::scores[KING][BLACK]))            / 128;
-    int MobilityWhite   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][WHITE]) + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][WHITE])) / 128;
-    int MobilityBlack   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][BLACK]) + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][BLACK])) / 128;
-    int SpaceWhite      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][WHITE])    + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][WHITE]))    / 128;
-    int SpaceBlack      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][BLACK])    + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][BLACK]))    / 128;
-    int ThreatsWhite    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][WHITE])   + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][WHITE]))   / 128;
-    int ThreatsBlack    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][BLACK])   + (128 - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][BLACK]))   / 128;
+    Value KingSafetyWhite = (phaseOfTheGame * mg_value(Trace::scores[KING][WHITE])            + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[KING][WHITE]))            / PHASE_MIDGAME;
+    Value KingSafetyBlack = (phaseOfTheGame * mg_value(Trace::scores[KING][BLACK])            + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[KING][BLACK]))            / PHASE_MIDGAME;
+    Value MobilityWhite   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][WHITE]) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][WHITE])) / PHASE_MIDGAME;
+    Value MobilityBlack   = (phaseOfTheGame * mg_value(Trace::scores[Trace::MOBILITY][BLACK]) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::MOBILITY][BLACK])) / PHASE_MIDGAME;
+    Value SpaceWhite      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][WHITE])    + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][WHITE]))    / PHASE_MIDGAME;
+    Value SpaceBlack      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][BLACK])    + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][BLACK]))    / PHASE_MIDGAME;
+    Value ThreatsWhite    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][WHITE])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][WHITE]))   / PHASE_MIDGAME;
+    Value ThreatsBlack    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][BLACK])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][BLACK]))   / PHASE_MIDGAME;
+    
+    //Value PSQ_Score = (phaseOfTheGame * mg_value(pos.psq_score()) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(pos.psq_score())) / PHASE_MIDGAME;
+    
+    Value nnue_v = (Value)0;
+    if (Eval::useNNUE)
+    {
+        nnue_v = Eval::NNUE::evaluate(pos, false);
+        nnue_v = pos.side_to_move() == WHITE ? nnue_v : -nnue_v;
+    }
 
-    myfile << "Wert  2: King Safety White: " << Trace::to_cp((Value)KingSafetyWhite) << "\n";
-    myfile << "Wert  3: King Safety Black: " << Trace::to_cp((Value)KingSafetyBlack) << "\n";
-    myfile << "Wert  4: Mobility White:    " << Trace::to_cp((Value)MobilityWhite)   << "\n";
-    myfile << "Wert  5: Mobility Black:    " << Trace::to_cp((Value)MobilityBlack)   << "\n";
-    myfile << "Wert  6: Space White:       " << Trace::to_cp((Value)SpaceWhite)      << "\n";
-    myfile << "Wert  7: Space Black:       " << Trace::to_cp((Value)SpaceBlack)      << "\n";
-    myfile << "Wert  8: Threats White:     " << Trace::to_cp((Value)ThreatsWhite) << "\n";
-    myfile << "Wert  9: Threats Black:     " << Trace::to_cp((Value)ThreatsBlack) << "\n\n";
+    Value v = Eval::evaluate(pos);
+    v = pos.side_to_move() == WHITE ? v : -v;
+
+    myfile << "King Safety White: " << Trace::to_cp(KingSafetyWhite) << "\n";
+    myfile << "King Safety Black: " << Trace::to_cp(KingSafetyBlack) << "\n";
+    myfile << "Mobility White:    " << Trace::to_cp(MobilityWhite)   << "\n";
+    myfile << "Mobility Black:    " << Trace::to_cp(MobilityBlack)   << "\n";
+    myfile << "Space White:       " << Trace::to_cp(SpaceWhite)      << "\n";
+    myfile << "Space Black:       " << Trace::to_cp(SpaceBlack)      << "\n";
+    myfile << "Threats White:     " << Trace::to_cp(ThreatsWhite)    << "\n";
+    myfile << "Threats Black:     " << Trace::to_cp(ThreatsBlack)    << "\n";
+    //myfile << "PSQ Score:         " << Trace::to_cp(PSQ_Score)       << "\n";
+    myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
+    myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n\n";
     myfile.close();        
 #endif
 
