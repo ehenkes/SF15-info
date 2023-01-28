@@ -251,8 +251,8 @@ void MainThread::search() {
       sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << sync_endl;
 
 #if defined _MyCode_
-  myDynamicFile.open("dynamicOutput.txt"); // overwrite
-  myDynamicFile << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << "\n";
+  //myDynamicFile.open("dynamicOutput.txt"); // overwrite
+  //myDynamicFile << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << "\n\n";
 #endif
 
   sync_cout << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
@@ -268,7 +268,7 @@ void MainThread::search() {
 
 #if defined _MyCode_
   //myDynamicFile << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960()) << "\n";
-  myDynamicFile.close();
+  //myDynamicFile.close();
 #endif
 }
 
@@ -410,7 +410,15 @@ void Thread::search() {
                   && multiPV == 1
                   && (bestValue <= alpha || bestValue >= beta)
                   && Time.elapsed() > 3000)
+              {
                   sync_cout << UCI::pv(rootPos, rootDepth) << sync_endl;
+
+#if defined _MyCode_
+              myDynamicFile.open("dynamicOutput.txt"); // overwrite
+              myDynamicFile << "zeile 417\n" << UCI::pv(rootPos, rootDepth) << "\n\n";
+              myDynamicFile.close();
+#endif
+              }
 
               // In case of failing low/high increase aspiration window and
               // re-search, otherwise exit the loop.
@@ -441,7 +449,14 @@ void Thread::search() {
 
           if (    mainThread
               && (Threads.stop || pvIdx + 1 == multiPV || Time.elapsed() > 3000))
+          { 
               sync_cout << UCI::pv(rootPos, rootDepth) << sync_endl;
+#if defined _MyCode_
+              myDynamicFile.open("dynamicOutput.txt"); // overwrite
+              myDynamicFile << UCI::pv(rootPos, rootDepth) << "\n\n";
+              myDynamicFile.close();
+#endif
+          }
       }
 
       if (!Threads.stop)
