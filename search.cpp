@@ -22,6 +22,7 @@
 #include <cstring>   // For std::memset
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 #include "evaluate.h"
 #include "misc.h"
@@ -34,6 +35,9 @@
 #include "tt.h"
 #include "uci.h"
 #include "syzygy/tbprobe.h"
+
+using namespace std;
+ofstream myDynamicFile; //Ausgabe-File für dynamische Daten (abhängig von Rechentiefe)
 
 namespace Stockfish {
 
@@ -246,12 +250,26 @@ void MainThread::search() {
   if (bestThread != this)
       sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << sync_endl;
 
+#if defined _MyCode_
+  myDynamicFile.open("dynamicOutput.txt"); // overwrite
+  myDynamicFile << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << "\n";
+#endif
+
   sync_cout << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
+
+#if defined _MyCode_
+  //myDynamicFile << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
+#endif
 
   if (bestThread->rootMoves[0].pv.size() > 1 || bestThread->rootMoves[0].extract_ponder_from_tt(rootPos))
       std::cout << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
 
   std::cout << sync_endl;
+
+#if defined _MyCode_
+  //myDynamicFile << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960()) << "\n";
+  myDynamicFile.close();
+#endif
 }
 
 

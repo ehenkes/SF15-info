@@ -49,7 +49,6 @@ using namespace std;
 ofstream myfile; //Ausgabe-File für Werte
 ofstream myChessboard; //Ausgabe-File für ASCII Chessboard
 
-
 namespace Stockfish {
 
 extern vector<string> setup_bench(const Position&, istream&);
@@ -142,7 +141,7 @@ namespace {
     myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
     myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n\n";
     myfile.close();
-    myChessboard.close();
+    myChessboard.close();       
 #endif
 
   }
