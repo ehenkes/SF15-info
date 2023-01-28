@@ -47,6 +47,8 @@
 using namespace std;
 
 ofstream myfile; //Ausgabe-File für Werte
+ofstream myChessboard; //Ausgabe-File für ASCII Chessboard
+
 
 namespace Stockfish {
 
@@ -99,8 +101,10 @@ namespace {
     //Material
     double mg_material = Trace::to_cp(mg_value(Trace::scores[Trace::MATERIAL][WHITE])) - Trace::to_cp(mg_value(Trace::scores[Trace::MATERIAL][BLACK]));
     double eg_material = Trace::to_cp(eg_value(Trace::scores[Trace::MATERIAL][WHITE])) - Trace::to_cp(eg_value(Trace::scores[Trace::MATERIAL][BLACK]));
-
-    myfile.open("output.txt", std::ios_base::app); // append instead of overwrite
+        
+    myChessboard.open("chessboard.txt"); // overwrite
+    myChessboard << pos << "\n\n";
+    myfile.open("output.txt", std::ios_base::app); // append instead of overwrite*/
     myfile << "Spielzug:                        " << token << "\n";
     myfile.precision(3);
     myfile << "Phase of the Game (128 ...0):  " << phaseOfTheGame << "\n";
@@ -120,11 +124,11 @@ namespace {
     if (Eval::useNNUE)
     {
         nnue_v = Eval::NNUE::evaluate(pos, false);
-        nnue_v = pos.side_to_move() == WHITE ? nnue_v : -nnue_v;
+        //nnue_v = pos.side_to_move() == WHITE ? nnue_v : -nnue_v;
     }
 
     Value v = Eval::evaluate(pos);
-    v = pos.side_to_move() == WHITE ? v : -v;
+    //v = pos.side_to_move() == WHITE ? v : -v;
 
     myfile << "King Safety White: " << Trace::to_cp(KingSafetyWhite) << "\n";
     myfile << "King Safety Black: " << Trace::to_cp(KingSafetyBlack) << "\n";
@@ -137,7 +141,8 @@ namespace {
     //myfile << "PSQ Score:         " << Trace::to_cp(PSQ_Score)       << "\n";
     myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
     myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n\n";
-    myfile.close();        
+    myfile.close();
+    myChessboard.close();
 #endif
 
   }

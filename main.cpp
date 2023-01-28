@@ -54,6 +54,9 @@ int main(int argc, char* argv[])
       else if (!strcmp(argv[i], "-usePrettyHardy")) 
       {
       */
+          ::DeleteFileA("output.txt");
+          ::DeleteFileA("chessboard.txt");
+          
           ::AllocConsole();
           
           freopen_s((FILE**)stderr, "CONOUT$", "w", stderr); //connect to stderr (std::cerr)
@@ -63,7 +66,7 @@ int main(int argc, char* argv[])
           ::SetWindow(120, 60, 1000);
           ::ShowWindow(::GetConsoleWindow(), SW_SHOW);
           ::UpdateWindow(::GetConsoleWindow());
-          sync_cerr << "26.01.2023: Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
+          sync_cerr << "28.01.2023: Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
      /* }
       else 
       {
