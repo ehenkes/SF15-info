@@ -415,7 +415,7 @@ void Thread::search() {
 
 #if defined _MyCode_
               myDynamicFile.open("dynamicOutput.txt"); // overwrite
-              myDynamicFile << "zeile 417\n" << UCI::pv(rootPos, rootDepth) << "\n\n";
+              myDynamicFile << UCI::pv(rootPos, rootDepth) << "\n\n";
               myDynamicFile.close();
 #endif
               }
