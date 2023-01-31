@@ -139,7 +139,16 @@ namespace {
     myfile << "Threats Black:     " << Trace::to_cp(ThreatsBlack)    << "\n";
     //myfile << "PSQ Score:         " << Trace::to_cp(PSQ_Score)       << "\n";
     myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
-    myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n\n";
+    myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n";
+    myfile << "Next Ply:          " << pos.game_ply() + 1            << "\n";
+    if (pos.side_to_move() == WHITE)
+    {
+        myfile << "NextToMove:        " << "white" << "\n\n";
+    }
+    else
+    {
+        myfile << "NextToMove:        " << "black" << "\n\n";
+    }    
     myfile.close();
     myChessboard.close();       
 #endif
