@@ -1890,8 +1890,12 @@ string UCI::pv(const Position& pos, Depth depth) {
          << " multipv "  << i + 1
          << " score "    << UCI::value(v);
 
+#if defined _MyCode_
+      ss << UCI::wdl(v, pos.game_ply());
+#else 
       if (Options["UCI_ShowWDL"])
           ss << UCI::wdl(v, pos.game_ply());
+#endif
 
       if (i == pvIdx && !tb && updated) // tablebase- and previous-scores are exact
          ss << (rootMoves[i].scoreLowerbound ? " lowerbound" : (rootMoves[i].scoreUpperbound ? " upperbound" : ""));
