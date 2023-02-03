@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,64 +129,65 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\bitboard.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\endgame.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\evaluate.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\incbin\incbin.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\material.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\misc.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\movegen.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\movepick.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\evaluate_nnue.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\features\half_ka_v2_hm.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\layers\affine_transform.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\layers\clipped_relu.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\layers\simd.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\layers\sqr_clipped_relu.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\nnue_accumulator.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\nnue_architecture.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\nnue_common.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\nnue_feature_transformer.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\pawns.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\position.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\psqt.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\search.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\syzygy\tbprobe.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\thread.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\thread_win32_osx.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\timeman.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\tt.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\tune.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\types.h" />
-    <ClInclude Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\uci.h" />
+    <ClInclude Include="bitboard.h" />
+    <ClInclude Include="endgame.h" />
+    <ClInclude Include="evaluate.h" />
+    <ClInclude Include="incbin\incbin.h" />
+    <ClInclude Include="material.h" />
+    <ClInclude Include="misc.h" />
+    <ClInclude Include="movegen.h" />
+    <ClInclude Include="movepick.h" />
+    <ClInclude Include="nnue\evaluate_nnue.h" />
+    <ClInclude Include="nnue\features\half_ka_v2_hm.h" />
+    <ClInclude Include="nnue\layers\affine_transform.h" />
+    <ClInclude Include="nnue\layers\clipped_relu.h" />
+    <ClInclude Include="nnue\layers\simd.h" />
+    <ClInclude Include="nnue\layers\sqr_clipped_relu.h" />
+    <ClInclude Include="nnue\nnue_accumulator.h" />
+    <ClInclude Include="nnue\nnue_architecture.h" />
+    <ClInclude Include="nnue\nnue_common.h" />
+    <ClInclude Include="nnue\nnue_feature_transformer.h" />
+    <ClInclude Include="pawns.h" />
+    <ClInclude Include="position.h" />
+    <ClInclude Include="psqt.h" />
+    <ClInclude Include="search.h" />
+    <ClInclude Include="syzygy\tbprobe.h" />
+    <ClInclude Include="thread.h" />
+    <ClInclude Include="thread_win32_osx.h" />
+    <ClInclude Include="timeman.h" />
+    <ClInclude Include="tt.h" />
+    <ClInclude Include="tune.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="uci.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\benchmark.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\bitbase.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\bitboard.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\endgame.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\evaluate.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\main.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\material.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\misc.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\movegen.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\movepick.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\evaluate_nnue.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\nnue\features\half_ka_v2_hm.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\pawns.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\position.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\psqt.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\search.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\syzygy\tbprobe.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\thread.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\timeman.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\tt.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\tune.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\uci.cpp" />
-    <ClCompile Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\ucioption.cpp" />
+    <ClCompile Include="benchmark.cpp" />
+    <ClCompile Include="bitbase.cpp" />
+    <ClCompile Include="bitboard.cpp" />
+    <ClCompile Include="endgame.cpp" />
+    <ClCompile Include="evaluate.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="material.cpp" />
+    <ClCompile Include="misc.cpp" />
+    <ClCompile Include="movegen.cpp" />
+    <ClCompile Include="movepick.cpp" />
+    <ClCompile Include="nnue\evaluate_nnue.cpp" />
+    <ClCompile Include="nnue\features\half_ka_v2_hm.cpp" />
+    <ClCompile Include="pawns.cpp" />
+    <ClCompile Include="position.cpp" />
+    <ClCompile Include="psqt.cpp" />
+    <ClCompile Include="search.cpp" />
+    <ClCompile Include="syzygy\tbprobe.cpp" />
+    <ClCompile Include="thread.cpp" />
+    <ClCompile Include="timeman.cpp" />
+    <ClCompile Include="tt.cpp" />
+    <ClCompile Include="tune.cpp" />
+    <ClCompile Include="uci.cpp" />
+    <ClCompile Include="ucioption.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Chess Engines\stockfish_15.1_win_x64_avx2\src\Makefile" />
+    <None Include="Makefile" />
+    <None Include="x64\Debug\nn-ad9b42354671.nnue" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
