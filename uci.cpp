@@ -93,8 +93,13 @@ namespace {
     }
 
 #if defined _MyCode_
+#if defined _NoAdditionalConsole_
+    //do nothing
+#else
     cerr.precision(3);
     sync_cerr << token << "\n" << Eval::trace(pos) << "\n" << sync_endl; // own output
+#endif
+
     int phaseOfTheGame = (Material::probe(pos))->game_phase();
     
     //Material
@@ -117,7 +122,7 @@ namespace {
     Value ThreatsWhite    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][WHITE])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][WHITE]))   / PHASE_MIDGAME;
     Value ThreatsBlack    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][BLACK])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][BLACK]))   / PHASE_MIDGAME;
     
-    //Value PSQ_Score = (phaseOfTheGame * mg_value(pos.psq_score()) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(pos.psq_score())) / PHASE_MIDGAME;
+    Value PSQ_Score = (phaseOfTheGame * mg_value(pos.psq_score()) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(pos.psq_score())) / PHASE_MIDGAME;
     
     Value nnue_v = (Value)0;
     if (Eval::useNNUE)
@@ -128,7 +133,7 @@ namespace {
 
     Value v = Eval::evaluate(pos);
     //v = pos.side_to_move() == WHITE ? v : -v;
-
+    myfile << "PSQ_Score:         " << Trace::to_cp(PSQ_Score)       << "\n";
     myfile << "King Safety White: " << Trace::to_cp(KingSafetyWhite) << "\n";
     myfile << "King Safety Black: " << Trace::to_cp(KingSafetyBlack) << "\n";
     myfile << "Mobility White:    " << Trace::to_cp(MobilityWhite)   << "\n";
