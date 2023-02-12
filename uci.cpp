@@ -142,10 +142,10 @@ namespace {
     myfile << "Space Black:       " << Trace::to_cp(SpaceBlack)      << "\n";
     myfile << "Threats White:     " << Trace::to_cp(ThreatsWhite)    << "\n";
     myfile << "Threats Black:     " << Trace::to_cp(ThreatsBlack)    << "\n";
-    //myfile << "PSQ Score:         " << Trace::to_cp(PSQ_Score)       << "\n";
     myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
     myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n";
     myfile << "Next Ply:          " << pos.game_ply() + 1            << "\n";
+    myfile << "FEN:               " << pos.fen()                     << "\n";
     if (pos.side_to_move() == WHITE)
     {
         myfile << "NextToMove:        " << "white" << "\n\n";
@@ -204,7 +204,6 @@ namespace {
   // with a search.
 
   void go(Position& pos, istringstream& is, StateListPtr& states) {
-
     Search::LimitsType limits;
     string token;
     bool ponderMode = false;

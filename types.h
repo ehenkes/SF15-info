@@ -44,7 +44,8 @@
 
 //// Additional Code by Dr. Erhard Henkes ("PrettyHardy") 
 #define _MyCode_ // Optional Outputs via cerr to an additional console
-#define _DoNotUseClassical_ // NNUE evaluation always preferred 
+//#define _DoNotUseClassical_ // NNUE evaluation always preferred 
+//#define _NoAdditionalConsole_
 ////
 
 #if defined(_MSC_VER)
