@@ -121,7 +121,11 @@ namespace {
     Value SpaceBlack      = (phaseOfTheGame * mg_value(Trace::scores[Trace::SPACE][BLACK])    + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::SPACE][BLACK]))    / PHASE_MIDGAME;
     Value ThreatsWhite    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][WHITE])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][WHITE]))   / PHASE_MIDGAME;
     Value ThreatsBlack    = (phaseOfTheGame * mg_value(Trace::scores[Trace::THREAT][BLACK])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::THREAT][BLACK]))   / PHASE_MIDGAME;
-    
+    Value PassedWhite     = (phaseOfTheGame * mg_value(Trace::scores[Trace::PASSED][WHITE])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::PASSED][WHITE]))   / PHASE_MIDGAME;
+    Value PassedBlack     = (phaseOfTheGame * mg_value(Trace::scores[Trace::PASSED][BLACK])   + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[Trace::PASSED][BLACK]))   / PHASE_MIDGAME;
+    Value PawnsWhite      = (phaseOfTheGame * mg_value(Trace::scores[PAWN][WHITE])            + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[PAWN][WHITE]))            / PHASE_MIDGAME;
+    Value PawnsBlack      = (phaseOfTheGame * mg_value(Trace::scores[PAWN][BLACK])            + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(Trace::scores[PAWN][BLACK]))            / PHASE_MIDGAME;
+
     Value PSQ_Score = (phaseOfTheGame * mg_value(pos.psq_score()) + (PHASE_MIDGAME - phaseOfTheGame) * eg_value(pos.psq_score())) / PHASE_MIDGAME;
     
     Value nnue_v = (Value)0;
@@ -142,6 +146,10 @@ namespace {
     myfile << "Space Black:       " << Trace::to_cp(SpaceBlack)      << "\n";
     myfile << "Threats White:     " << Trace::to_cp(ThreatsWhite)    << "\n";
     myfile << "Threats Black:     " << Trace::to_cp(ThreatsBlack)    << "\n";
+    myfile << "Passed White:      " << Trace::to_cp(PassedWhite)     << "\n";
+    myfile << "Passed Black:      " << Trace::to_cp(PassedBlack)     << "\n";
+    myfile << "Pawns White:       " << Trace::to_cp(PawnsWhite)      << "\n";
+    myfile << "Pawns Black:       " << Trace::to_cp(PawnsBlack)      << "\n";
     myfile << "NNUE evaluation:   " << Trace::to_cp(nnue_v)          << "\n";
     myfile << "Final evaluation:  " << Trace::to_cp(v)               << "\n";
     myfile << "Next Ply:          " << pos.game_ply() + 1            << "\n";

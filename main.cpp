@@ -44,16 +44,6 @@ int main(int argc, char* argv[])
     std::cout << engine_info() << std::endl;
 
 #if defined _MyCode_
-  /*for (int i = 1; i < argc; i++) 
-  {
-
-      if (!strcmp(argv[i], "-ShowHelpForPrettyHardy")) 
-      {
-          sync_cerr << "Usage: if Parameter -usePrettyHardy exists\nthen Console prompt up\n" << sync_endl;
-      }
-      else if (!strcmp(argv[i], "-usePrettyHardy")) 
-      {
-      */
           ::DeleteFileA("output.txt");
           ::DeleteFileA("chessboard.txt");
 #if defined _NoAdditionalConsole_  
@@ -68,14 +58,8 @@ int main(int argc, char* argv[])
           ::SetWindow(120, 60, 1000);
           ::ShowWindow(::GetConsoleWindow(), SW_SHOW);
           ::UpdateWindow(::GetConsoleWindow());
-          sync_cerr << "04.02.2023: Hier gibt es real-time Kommentare von SF 15.1.\n" << sync_endl;
+          sync_cerr << "29.03.2023: Hier gibt es real-time Bewertungen von SF 15.1.\n" << sync_endl;
 #endif
-     /* }
-      else 
-      {
-          if (i == argc - 1) break;
-      }
-  }*/
 #endif
 
   CommandLine::init(argc, argv);
